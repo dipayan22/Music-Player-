@@ -11,54 +11,6 @@ const cover = document.getElementById('cover');
 const currTime = document.querySelector('#currTime');
 const durTime = document.querySelector('#durTime');
 
-
-// const audioPlayer = document.getElementById('play');
-
-
-// Fetch the JSON file and initialize the player
-// fetch('musicDatabase.json')
-//     .then(response => response.json())
-//     .then(data => initializePlayer(data))
-//     .catch(error => console.error('Error loading music data:', error));
-
-// function initializePlayer(musicData) {
-// 		// Your existing code for initializing the player
-// 		// For example:
-// 		// musicData.forEach(song => {
-// 		//     addSongToPlaylist(song.title, song.artist, song.src);
-// 		// });
-	
-// 		// Load the first song (assuming it exists)
-// 	if (musicData.length > 0) {
-// 		loadSong(musicData[0].title, musicData[0].src);
-// 	}
-// }
-	
-// 	// Function to load a song
-// function loadSong(songTitle, songSrc) {
-// 	title.innerText = songTitle;
-// 	audio.src = songSrc;
-// 	cover.src = `images/${songTitle.toLowerCase()}.jpg`; // Assuming your images are named after the song title
-// }
-
-// // Song titles
-// const songs = ['sadda haq', 'parinda', 'zinda'];
-
-// // Keep track of song
-// let songIndex = 1;
-
-// // Initially load song details into DOM
-// loadSong(songs[songIndex]);
-
-// // Update song details
-// function loadSong(song) {
-//   title.innerText = song;
-//   audio.src = `music/${song}.mp3`;
-//   cover.src = `images/${song}.jpg`;
-// }
-
-
-
 // Fetch the JSON file and initialize the player
 let musicData;
  // Declare musicData in a broader scope
@@ -85,16 +37,48 @@ function initializePlayer(musicData) {
     }
 }
 
+/*
+the below function is used to resize all images to lower resolution so that they load faster in runtime
+*/
+
+function resizeImage(src, maxWidth, maxHeight) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = function() {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      const widthRatio = maxWidth / image.width;
+      const heightRatio = maxHeight / image.height;
+
+      const newWidth = Math.min(image.width, maxWidth);
+      const newHeight = Math.min(image.height, maxHeight);
+
+      canvas.width = newWidth;
+      canvas.height = newHeight;
+
+      ctx.drawImage(image, 0, 0, newWidth, newHeight);
+
+      const resizedImage = canvas.toDataURL();
+      resolve(resizedImage);
+    };
+    image.onerror = reject;
+    image.src = src;
+  });
+}
+
+
+
 // Function to load a song
 function loadSong(songTitle, songSrc) {
     title.innerText = songTitle;
     audio.src = songSrc;
-    cover.src = `images/${songTitle.toLowerCase()}.jpg`; // Assuming your images are named after the song title
-}
-
-// Your existing code for play, pause, next, prev, etc.
-
-// Your existing code...
+    // Assuming your images are named after the song title
+    // cover.src = `images/${songTitle}.jpg`; 
+    resizeImage(`images/${songTitle}.jpg`, 100, 100).then((resizedImage) => {
+      cover.src = resizedImage;
+    });
+  }
 
 // Keep track of song index
 let songIndex = 0;

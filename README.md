@@ -4,7 +4,9 @@
 
 Elevate your workout routine with this dynamic music player, preloaded with an enticing selection of songs meticulously curated for your chilled workout sessions.
 
-The music app has a catchy UI🌶 to play music stored in the "music folder" using the HTML5 audio API💥. Check it in action <a href="https://dipayan22.github.io/Music-Player-/">here.</a>
+The music app has a catchy UI🌶 to play music stored in the "music folder" using the HTML5 audio API💥. Check it in action <a href="#">👉🏼here👈🏼</a>
+
+We have preferred to used **JSON** for storing of song info and might migrate to SQL in future as per need, ***JSON can be considered a lightweight database*** with less functionalities but can be considered a good start.
 
 # Project Specifications
 
